@@ -1,7 +1,5 @@
 package systems.tat.ramta.client.utils;
 
-import org.springframework.util.ResourceUtils;
-
 import java.io.File;
 
 public class ResourcesUtils {
@@ -15,7 +13,7 @@ public class ResourcesUtils {
     }
 
     public static File getExecutePath() {
-        return new File(new File(ResourceUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getParent());
+        return new File(System.getProperty("user.dir"));
     }
 
     public static boolean trueFormat(File file, String value) {
