@@ -1,0 +1,16 @@
+{
+  "name": "default",
+  "version": "1.0",
+  "authors": [
+    "Niklas Tat",
+    "Daniel Ramke"
+  ],
+  "bannerPath": "assets/banner/defaultBanner.png",
+  "description": [
+    "This is the default template information's file."
+  ],
+  "images": [
+    "assets/img/default1.png",
+    "assets/img/default2.png"
+  ]
+}
