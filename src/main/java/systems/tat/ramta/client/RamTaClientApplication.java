@@ -1,8 +1,6 @@
 package systems.tat.ramta.client;
 
 import javafx.application.Application;
-import net.rgielen.fxweaver.core.FxWeaver;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
