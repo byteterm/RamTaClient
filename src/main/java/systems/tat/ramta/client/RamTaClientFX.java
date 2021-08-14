@@ -12,10 +12,12 @@ public class RamTaClientFX extends Application {
 
     private ConfigurableApplicationContext applicationContext;
 
+    private static SettingService settingService;
+
     @Override
     public void init() throws Exception {
         applicationContext = new SpringApplicationBuilder(RamTaClientApplication.class).run();
-        new SettingService();
+        settingService = new SettingService();
     }
 
     @Override
@@ -27,5 +29,9 @@ public class RamTaClientFX extends Application {
     public void stop() throws Exception {
         applicationContext.close();
         Platform.exit();
+    }
+
+    public static SettingService getSettingService() {
+        return settingService;
     }
 }

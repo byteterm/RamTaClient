@@ -24,8 +24,6 @@ public class SettingService {
             ConfigFile config = new ConfigFile(file.getName(), file.getPath());
             if(!(configs.containsKey(config.getName()))) {
                 configs.put(config.getName(), config);
-                System.out.println("Load -> " + config.getName() + " Path: " + config.getPath() + " Handler: " + config.getHandlerType().name());
-                System.out.println("Size -> " + configs.size());
             }
         }
     }

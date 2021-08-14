@@ -5,8 +5,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.stereotype.Service;
+import systems.tat.ramta.client.RamTaClientFX;
+import systems.tat.ramta.client.models.config.ConfigFile;
 import systems.tat.ramta.client.models.gui.DisplayScene;
 import systems.tat.ramta.client.models.gui.TemplateObject;
+import systems.tat.ramta.client.service.settings.SettingService;
+import systems.tat.ramta.client.service.settings.handler.PropertiesHandler;
 import systems.tat.ramta.client.utils.ResourcesUtils;
 
 import java.io.*;
@@ -20,18 +24,23 @@ public class DisplayService {
     private final List<TemplateObject> templates = new ArrayList<>();
     private final Map<String, DisplayScene> scenes = new HashMap<>();
     private final File RESOURCE_LOCATION = new File(ResourcesUtils.getExecutePath().getPath() + "/frontend/templates/");
+    private final File EXTRACT_TEMPLATE_LOCATION = new File(ResourcesUtils.getExecutePath().getPath() + "/frontend/displayed/");
 
     private Stage stage;
     private FxWeaver weaver;
+    private TemplateObject currentTemplate;
 
     public void initialize(Stage stage, FxWeaver weaver) {
         this.stage = stage;
-        this.setup();
         this.weaver = weaver;
+        this.setup();
+        System.out.println("Current used Template -> " + getCurrentTemplate().getName());
     }
 
     public void displayScene(String name) {
         DisplayScene displayScene = scenes.get(name);
+        FrontendService service = new FrontendService(currentTemplate);
+        service.include(displayScene);
         stage.setScene(displayScene.getScene());
         stage.show();
     }
@@ -52,6 +61,24 @@ public class DisplayService {
         this.loadFromFolder();
     }
 
+    public boolean existTemplate(String templateName) {
+        for(TemplateObject object : templates) {
+            if(object.getName().equals(templateName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public TemplateObject getTemplateObject(String name) {
+        for(TemplateObject object : templates) {
+            if(object.getName().equals(name)) {
+                return object;
+            }
+        }
+        return null;
+    }
+
     public int getTemplateSize() {
         return templates.size();
     }
@@ -64,15 +91,32 @@ public class DisplayService {
         return stage;
     }
 
+    public TemplateObject getCurrentTemplate() {
+        return currentTemplate;
+    }
+
     private void setup() {
         this.stage.initStyle(StageStyle.DECORATED);
         this.loadDefaultScenes();
         this.loadFromFolder();
-        System.out.println("Temp -> " + templates.isEmpty());
-        for (TemplateObject object : templates) {
-            System.out.println("Name: " + object.getName());
+        this.catchInfo();
+        this.extractTemplate();
+    }
+
+    private void catchInfo() {
+        SettingService service = RamTaClientFX.getSettingService();
+
+        if(!(service.getConfigs().containsKey("guiConf"))) {
+            currentTemplate = getTemplateObject("default");
+            return;
         }
-        //System.out.println(templates.get(0).getName() + "," + templates.get(0).getVersion());
+
+        ConfigFile config = service.getConfigs().get("guiConf");
+        PropertiesHandler handler = (PropertiesHandler) config.getHandler();
+        String designName = handler.getString("usedTemplate");
+        if(existTemplate(designName)) {
+            currentTemplate = getTemplateObject(designName);
+        }
     }
 
     private void loadDefaultScenes() {
@@ -90,6 +134,24 @@ public class DisplayService {
                     templates.add(template);
                 }
             }
+        }
+    }
+
+    private void clearDisplayedFolder() {
+        if(Objects.requireNonNull(EXTRACT_TEMPLATE_LOCATION.listFiles()).length > 0) {
+            for(File file : Objects.requireNonNull(EXTRACT_TEMPLATE_LOCATION.listFiles())) {
+                file.delete();
+            }
+        }
+    }
+
+    private void extractTemplate() {
+        try {
+            this.clearDisplayedFolder();
+            File zipPath = new File(RESOURCE_LOCATION.getPath() + "/" + currentTemplate.getName() + ".zip");
+            ResourcesUtils.unzip(zipPath, EXTRACT_TEMPLATE_LOCATION);
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
