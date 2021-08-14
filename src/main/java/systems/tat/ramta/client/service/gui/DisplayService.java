@@ -34,7 +34,6 @@ public class DisplayService {
         this.stage = stage;
         this.weaver = weaver;
         this.setup();
-        System.out.println("Current used Template -> " + getCurrentTemplate().getName());
     }
 
     public void displayScene(String name) {
@@ -106,12 +105,12 @@ public class DisplayService {
     private void catchInfo() {
         SettingService service = RamTaClientFX.getSettingService();
 
-        if(!(service.getConfigs().containsKey("guiConf"))) {
+        if(!(service.getConfigs().containsKey("generalConf"))) {
             currentTemplate = getTemplateObject("default");
             return;
         }
 
-        ConfigFile config = service.getConfigs().get("guiConf");
+        ConfigFile config = service.getConfigs().get("generalConf");
         PropertiesHandler handler = (PropertiesHandler) config.getHandler();
         String designName = handler.getString("usedTemplate");
         if(existTemplate(designName)) {
