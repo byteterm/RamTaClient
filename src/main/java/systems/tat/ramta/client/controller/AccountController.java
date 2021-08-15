@@ -3,7 +3,6 @@ package systems.tat.ramta.client.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,6 @@ import systems.tat.ramta.client.models.gui.ReflectKey;
 import systems.tat.ramta.client.service.LanguageService;
 
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 @Component
@@ -30,14 +28,27 @@ public class AccountController implements Initializable {
     public Button loginBtn;
     public Label clientVersion;
 
+    public ChoiceBox<String> languageSet;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.loadLanguages();
+        this.loadChose();
     }
 
     @FXML
     public void onLoginTrigger(ActionEvent actionEvent) {
         System.out.println("Clicked!");
+        //ToDo: This line will be removed and called when the user can enter the client...
+        StageInitializer.getDisplayService().displayScene("client");
+    }
+
+    public void onChoseLang(ActionEvent event) {
+        LanguageService service = RamTaClientFX.getLanguageService();
+        String language = languageSet.getValue();
+        System.out.println(language);
+        service.selectLanguage(language);
+        this.loadLanguages();
     }
 
     private void loadLanguages() {
@@ -50,13 +61,22 @@ public class AccountController implements Initializable {
 
     private void registerLangObject(Labeled node, ReflectKey... reflectKey) {
         LanguageService service = RamTaClientFX.getLanguageService();
-        String text = service.getMessage("account", node.getText().toUpperCase(Locale.ROOT));
-        String reflected = text;
+        String text = service.getMessage("account", node.getId());
         if(reflectKey.length > 0) {
             for(ReflectKey keys : reflectKey) {
-               reflected = text.replace(keys.getReflect(), keys.getKey());
+               text = text.replace(keys.getReflect(), keys.getKey());
             }
         }
-        node.setText(reflected);
+        node.setText(text);
     }
+
+    private void loadChose() {
+        LanguageService service = RamTaClientFX.getLanguageService();
+        for(String string : service.getLanguages().keySet()) {
+            languageSet.getItems().add(string);
+        }
+        languageSet.setValue(service.getCurrentLanguages());
+        languageSet.setOnAction(this::onChoseLang);
+    }
+
 }

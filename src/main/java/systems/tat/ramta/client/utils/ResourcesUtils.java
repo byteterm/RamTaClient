@@ -56,6 +56,7 @@ public class ResourcesUtils {
                 zipOut.closeEntry();
             }
             File[] children = fileToZip.listFiles();
+            assert children != null;
             for (File childFile : children) {
                 zipFile(childFile, fileName + "/" + childFile.getName(), zipOut);
             }
@@ -77,6 +78,9 @@ public class ResourcesUtils {
     }
 
     public static boolean trueFormat(File file, String value) {
+        if(!(file.getName().contains("."))) {
+            return false;
+        }
         String format = value;
         String[] split = file.getName().split("\\.");
         String type = "." + split[1];
@@ -84,6 +88,26 @@ public class ResourcesUtils {
             format = "." + value;
         }
         return type.equals(format);
+    }
+
+    public static String read(File file) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String result = null;
+            StringBuilder builder = new StringBuilder();
+            while ((result = reader.readLine()) != null) {
+                builder.append(result);
+            }
+            reader.close();
+            return builder.toString();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String[] makeArray(String string, String regex) {
+        return string.split(regex);
     }
 
 }

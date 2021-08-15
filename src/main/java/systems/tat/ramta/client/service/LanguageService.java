@@ -39,7 +39,8 @@ public class LanguageService {
     }
 
     public void selectLanguage(String language) {
-
+        currentLanguages = language;
+        this.saveLanguage();
     }
 
     private void saveLanguage() {

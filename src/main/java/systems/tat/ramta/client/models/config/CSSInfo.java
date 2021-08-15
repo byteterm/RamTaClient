@@ -6,6 +6,7 @@ public class CSSInfo {
 
     private List<String> account;
     private List<String> client;
+    private List<String> variables;
 
     public CSSInfo() { }
 
@@ -17,4 +18,7 @@ public class CSSInfo {
         return client;
     }
 
+    public List<String> getVariables() {
+        return variables;
+    }
 }

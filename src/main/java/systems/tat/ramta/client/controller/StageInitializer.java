@@ -11,11 +11,11 @@ import systems.tat.ramta.client.service.gui.DisplayService;
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
     private final FxWeaver fxWeaver;
-    private final DisplayService displayService;
+    private static DisplayService displayService;
 
-    public StageInitializer(FxWeaver fxWeaver, DisplayService displayService) {
+    public StageInitializer(FxWeaver fxWeaver, DisplayService IDisplayService) {
         this.fxWeaver = fxWeaver;
-        this.displayService = displayService;
+        displayService = IDisplayService;
     }
 
     @Override
@@ -27,5 +27,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
          * stage.setScene(new Scene(fxWeaver.loadView(AccountController.class)));
          * stage.show();
          */
+    }
+
+    public static DisplayService getDisplayService() {
+        return displayService;
     }
 }
