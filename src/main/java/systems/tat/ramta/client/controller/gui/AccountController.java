@@ -1,4 +1,4 @@
-package systems.tat.ramta.client.controller;
+package systems.tat.ramta.client.controller.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package systems.tat.ramta.client.controller;
+package systems.tat.ramta.client.controller.gui;
 
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import systems.tat.ramta.client.event.StageReadyEvent;
 import systems.tat.ramta.client.service.gui.DisplayService;
+import systems.tat.ramta.client.service.socket.SocketClientService;
 
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
@@ -20,6 +21,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
+
         Stage stage = event.getStage();
         displayService.initialize(stage, fxWeaver);
         displayService.displayScene("account");
