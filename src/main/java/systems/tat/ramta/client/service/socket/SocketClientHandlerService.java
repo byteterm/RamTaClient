@@ -25,7 +25,6 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         setChannel(ctx.channel());
-        logger.info("Connected to Server");
         new PacketOutHandshake(this, ClientStatus.LoginIn);
     }
 

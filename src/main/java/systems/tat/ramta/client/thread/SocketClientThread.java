@@ -18,11 +18,9 @@ public class SocketClientThread implements Runnable {
     private final Logger logger = LoggerFactory.getLogger(SocketClientThread.class);
 
     private final PipelineService pipelineService;
-    private final SocketClientHandlerService socketClientHandlerService;
 
-    public SocketClientThread(PipelineService pipelineService, SocketClientHandlerService socketClientHandlerService) {
+    public SocketClientThread(PipelineService pipelineService) {
         this.pipelineService = pipelineService;
-        this.socketClientHandlerService = socketClientHandlerService;
     }
 
     @Override
