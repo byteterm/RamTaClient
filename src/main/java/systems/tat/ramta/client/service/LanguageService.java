@@ -1,5 +1,6 @@
 package systems.tat.ramta.client.service;
 
+import org.springframework.stereotype.Service;
 import systems.tat.ramta.client.RamTaClientFX;
 import systems.tat.ramta.client.models.config.ConfigFile;
 import systems.tat.ramta.client.models.lang.Language;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+@Service
 public class LanguageService {
 
     private final File RESOURCE_LOCATION = new File(ResourcesUtils.getPath("languages/"));
@@ -19,7 +21,10 @@ public class LanguageService {
 
     private String currentLanguages;
 
-    public LanguageService() {
+    private final SettingService settingService;
+
+    public LanguageService(SettingService settingService) {
+        this.settingService = settingService;
         this.loadLanguages();
     }
 
@@ -60,7 +65,7 @@ public class LanguageService {
     }
 
     private void catchLanguage() {
-        SettingService service = RamTaClientFX.getSettingService();
+        SettingService service = settingService;
         if(!(service.getConfigs().containsKey("generalConf"))) {
             currentLanguages = "english";
             return;
