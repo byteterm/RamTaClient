@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -7,72 +9,81 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="920.0" prefHeight="540.0" prefWidth="920.0" styleClass="main-container" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="systems.tat.ramta.client.controller.gui.AccountController">
-   <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="systems.tat.ramta.client.controller.gui.AccountController">
+   <children>
+      <BorderPane prefHeight="613.0" prefWidth="1151.0" styleClass="container">
+         <left>
+            <Pane prefWidth="500.0" styleClass="left-container" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <children>
+                  <Label fx:id="clientVersion" alignment="CENTER" layoutX="150.0" layoutY="582.0" prefHeight="17.0" prefWidth="200.0" styleClass="version-label" text="Version: 0.0.1-beta" />
+                  <StackPane layoutX="17.0" layoutY="153.0" prefHeight="400.0" prefWidth="462.0">
+                     <children>
+                        <Pane fx:id="signUpLeftPage" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <JFXButton fx:id="signUpSignInBtn" layoutX="151.0" layoutY="269.0" onAction="#switchToSignIn" prefHeight="40.0" prefWidth="160.0" styleClass="send-btn" text="Sign In" />
+                              <Label fx:id="signUpText" alignment="CENTER" layoutX="104.0" layoutY="94.0" prefHeight="82.0" prefWidth="266.0" styleClass="text-left" text="If you already have an account, please log in." />
+                              <Label fx:id="signUpLeftHeader" alignment="CENTER" layoutX="131.0" layoutY="28.0" prefHeight="50.0" prefWidth="200.0" styleClass="left-headline" text="Sing In" />
+                           </children></Pane>
+                        <Pane fx:id="signInLeftPage" prefHeight="200.0" prefWidth="200.0" visible="false">
+                           <children>
+                              <Label fx:id="signInLeftHeader" alignment="CENTER" layoutX="131.0" layoutY="28.0" prefHeight="50.0" prefWidth="200.0" styleClass="left-headline" text="Sing Up" />
+                              <Label fx:id="signInText" alignment="CENTER" layoutX="104.0" layoutY="94.0" prefHeight="82.0" prefWidth="266.0" styleClass="text-left" text="You do not have an account? No problem with one click on Sign Up you can register!" />
+                              <JFXButton fx:id="signInSignUpBtn" layoutX="151.0" layoutY="269.0" onAction="#switchToSignUp" prefHeight="40.0" prefWidth="160.0" styleClass="send-btn" text="Sign Up" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </StackPane>
+               </children>
+            </Pane>
+         </left>
+         <center>
+            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane fx:id="signUpPage" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton fx:id="signUpBtn" layoutX="341.0" layoutY="440.0" prefHeight="40.0" prefWidth="140.0" styleClass="send-btn" text="Sign Up" />
+                        <JFXCheckBox fx:id="acceptBox" layoutX="161.0" layoutY="450.0" maxWidth="120.0" prefHeight="18.0" prefWidth="90.0" styleClass="remember" text="Accept eula" />
+                        <TextField fx:id="signUpTextInputEmail" alignment="CENTER" layoutX="161.0" layoutY="274.0" prefHeight="40.0" prefWidth="320.0" promptText="E-mail" styleClass="input-style" />
+                        <Label fx:id="signUpRightHeader" alignment="CENTER" contentDisplay="TOP" layoutX="233.0" layoutY="60.0" prefHeight="50.0" prefWidth="175.0" styleClass="header-label" text="Sign Up" />
+                        <TextField fx:id="signUpTextInputName" alignment="CENTER" layoutX="161.0" layoutY="176.0" prefHeight="40.0" prefWidth="320.0" promptText="Username" styleClass="input-style" />
+                        <PasswordField fx:id="signUpPasswordInput" alignment="CENTER" layoutX="161.0" layoutY="372.0" prefHeight="40.0" prefWidth="320.0" promptText="Password" styleClass="input-style" />
+                        <Label fx:id="rulesLink" alignment="TOP_LEFT" layoutX="161.0" layoutY="500.0" prefHeight="67.0" prefWidth="320.0" styleClass="password-hyper" text="Forgot password?" />
+                     </children></Pane>
+                  <Pane fx:id="signInPage" prefHeight="200.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <TextField fx:id="signInTextInput" alignment="CENTER" layoutX="161.0" layoutY="176.0" prefHeight="40.0" prefWidth="320.0" promptText="E-mail or Username" styleClass="input-style" />
+                        <PasswordField fx:id="signInPasswordInput" alignment="CENTER" layoutX="161.0" layoutY="274.0" prefHeight="40.0" prefWidth="320.0" promptText="Password" styleClass="input-style" />
+                        <JFXButton fx:id="signInBtn" layoutX="341.0" layoutY="353.0" prefHeight="40.0" prefWidth="140.0" styleClass="send-btn" text="Sign In" />
+                        <Label fx:id="signInRightHeader" alignment="CENTER" contentDisplay="TOP" layoutX="233.0" layoutY="60.0" prefHeight="50.0" prefWidth="175.0" styleClass="header-label" text="Sign In" />
+                        <JFXCheckBox fx:id="remember" layoutX="161.0" layoutY="364.0" maxWidth="120.0" styleClass="remember" text="Remember me" />
+                        <Label fx:id="passwordHelp" alignment="TOP_RIGHT" layoutX="380.0" layoutY="437.0" prefHeight="23.0" prefWidth="100.0" styleClass="password-hyper" text="Forgot password?" />
+                     </children>
+                  </Pane>
+               </children>
+            </StackPane>
+         </center>
+      </BorderPane>
+      <Pane prefHeight="35.0" prefWidth="1150.0">
          <children>
-            <Label fx:id="accountHeadline" styleClass="headline" text="ACC_HEADLINE">
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="300.0">
-               <children>
-                  <TextField fx:id="username" alignment="CENTER" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" styleClass="user-input" />
-                  <Label fx:id="userinHeadline" layoutY="14.0" text="USER_HEADLINE">
-                     <styleClass>
-                        <String fx:value="label-username" />
-                        <String fx:value="default-label" />
-                     </styleClass>
-                  </Label>
-               </children>
-            </Pane>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="300.0">
-               <children>
-                  <PasswordField fx:id="password" alignment="CENTER" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" styleClass="pass-input" />
-                  <Label fx:id="passHeadline" layoutY="14.0" text="PASS_HEADLINE">
-                     <styleClass>
-                        <String fx:value="label-password" />
-                        <String fx:value="default-label" />
-                     </styleClass>
-                  </Label>
-               </children>
-            </Pane>
-            <Button fx:id="loginBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginTrigger" prefHeight="40.0" prefWidth="150.0" text="LOGIN_BUTTON">
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin>
+            <Button fx:id="exit" layoutX="1116.0" mnemonicParsing="false" onAction="#onCloseRequest" prefHeight="35.0" prefWidth="35.0" text="X">
                <styleClass>
-                  <String fx:value="login-btn" />
-                  <String fx:value="default-label" />
+                  <String fx:value="tool-btn" />
+                  <String fx:value="colored-btn" />
                </styleClass>
             </Button>
+            <Button fx:id="minimize" layoutX="1081.0" mnemonicParsing="false" onAction="#onMinimize" prefHeight="35.0" prefWidth="35.0" styleClass="tool-btn" text="-" />
          </children>
-      </VBox>
-   </center>
-   <left>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ChoiceBox fx:id="languageSet" layoutX="36.0" layoutY="14.0" prefWidth="150.0" styleClass="language-choice" />
-         </children></Pane>
-   </right>
-   <bottom>
-      <VBox alignment="CENTER_RIGHT" prefHeight="40.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="clientVersion" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="200.0" text="VERSION" textAlignment="CENTER">
-               <styleClass>
-                  <String fx:value="label-version" />
-                  <String fx:value="default-label" />
-               </styleClass>
-            </Label>
-         </children>
-      </VBox>
-   </bottom>
-</BorderPane>
+      </Pane>
+      <ImageView fitHeight="128.0" fitWidth="256.0" layoutX="120.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+      <ChoiceBox fx:id="languageChoice" layoutX="10.0" layoutY="575.0" prefHeight="0.0" prefWidth="70.0" styleClass="language-choice" />
+   </children>
+</AnchorPane>
