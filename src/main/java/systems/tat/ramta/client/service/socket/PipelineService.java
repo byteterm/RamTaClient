@@ -36,11 +36,12 @@ public class PipelineService extends ChannelInitializer<Channel> {
 
         pipeline.addLast(socketClientHandler);
         // Add ssl
+        // ToDo SSL
         //pipeline.addLast(sslContext.newHandler(ch.alloc(), "client.ramta.tat.systems", 7777));
         //pipeline.addLast(sslContext.newHandler(ch.alloc()));
 
         // text line codec
-        //pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
+        pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
         pipeline.addLast("decoder", new StringDecoder(CharsetUtil.UTF_8));
         pipeline.addLast("encoder", new StringEncoder(CharsetUtil.UTF_8));
 

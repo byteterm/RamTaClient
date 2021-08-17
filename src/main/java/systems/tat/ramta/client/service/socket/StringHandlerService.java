@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import systems.tat.ramta.client.lib.message.Message;
 import systems.tat.ramta.client.lib.socket.BasicStringHandler;
 
+import java.lang.reflect.Constructor;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -16,7 +17,10 @@ public class StringHandlerService extends BasicStringHandler {
     @Override
     public void handleMessage(Message message, String originalMessage, Channel channel) {
         try {
-            Class.forName("systems.tat.ramta.client.packets.in." + message.getType()).getDeclaredConstructor().newInstance(message,channel);
+            Class<?> packetClass = Class.forName("systems.tat.ramta.client.packets.in.PacketIn" + message.getType());
+            Constructor<?> constructor = packetClass.getConstructor(Message.class, Channel.class);
+
+            constructor.newInstance(message, channel);
         } catch (Exception ex) {
             System.out.println("No Handler for packet " + message.getType() + " found");
         }

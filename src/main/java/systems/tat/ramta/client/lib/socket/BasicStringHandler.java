@@ -15,41 +15,31 @@ public abstract class BasicStringHandler extends SimpleChannelInboundHandler<Str
     private final Map<Channel, Boolean> isString;
 
     public BasicStringHandler() {
-        this.open = new HashMap<>();
-        this.parsed = new HashMap<>();
-        this.isString = new HashMap<>();
+        open = new HashMap<>();
+        parsed = new HashMap<>();
+        isString = new HashMap<>();
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String message) throws Exception {
+        read(channelHandlerContext.channel(), message);
     }
 
     public void read(Channel channel, String message) {
         for (String c : message.split("")) {
             getParsed(channel).append(c);
-
-            if (c.equals("\"")
-                    & (getParsed(channel).length() < 2
-                    | ! Character.toString(getParsed(channel).charAt(getParsed(channel).length() -2)).equals("\\")))
-            setIsString(channel, !isString(channel));
-
-            if (isString(channel))
-                continue;
-
-            if (c.equals("{"))
-                open.put(channel, getOpen(channel) + 1);
-
+            if (c.equals("\"") && (getParsed(channel).length() < 2 || ! Character.toString(getParsed(channel).charAt(getParsed(channel).length() - 2)).equals("\\"))) setIsString(channel, !isString(channel));
+            if (isString(channel)) continue;
+            if (c.equals("{")) open.put(channel, getOpen(channel) + 1);
             if (c.equals("}")) {
-                open.put(channel, getOpen(channel) -1);
-
+                open.put(channel, getOpen(channel) - 1);
                 if (getOpen(channel) == 0) {
                     try {
                         String parsed = getParsed(channel).toString();
                         handleMessage(Message.createFromJsonString(parsed), parsed, channel);
-                    } catch (Exception ex) {
+                    } catch (Exception e) {
                         System.err.println("Error while parsing JSON message: " + getParsed(channel));
-                        ex.printStackTrace();
+                        e.printStackTrace();
                     }
                     parsed.put(channel, new StringBuilder());
                 }
@@ -59,7 +49,7 @@ public abstract class BasicStringHandler extends SimpleChannelInboundHandler<Str
 
     public abstract void handleMessage(Message message, String originalMessage, Channel channel);
 
-    public int getOpen(Channel channel) {
+    private int getOpen(Channel channel) {
         open.putIfAbsent(channel, 0);
         return open.get(channel);
     }

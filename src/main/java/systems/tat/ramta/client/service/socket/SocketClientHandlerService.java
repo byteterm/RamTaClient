@@ -41,10 +41,7 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     public void sendMessage(String message) {
         if (channel != null
                 && channel.isActive()) {
-            logger.info("Message Send");
             channel.writeAndFlush(message);
-        } else {
-            logger.info("Message not send");
         }
     }
 

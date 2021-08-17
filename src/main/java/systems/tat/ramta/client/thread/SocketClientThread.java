@@ -31,7 +31,6 @@ public class SocketClientThread implements Runnable {
 
         while (true) {
             if (!connect()) {
-                logger.info("Start ?");
                 connect();
             }
         }
@@ -52,7 +51,6 @@ public class SocketClientThread implements Runnable {
             f = b.connect("127.0.0.1", 7777).sync();
             f.channel().closeFuture().sync();
         } catch (Exception e) {
-            logger.info("Test");
             return false;
         } finally {
             group.shutdownGracefully();
