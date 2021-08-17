@@ -63,7 +63,6 @@ public class AccountController implements Initializable {
     public PasswordField signUpPasswordInput;
     public Label rulesLink;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         signUpBtn.setDisable(true);
@@ -71,6 +70,7 @@ public class AccountController implements Initializable {
         this.loadLanguages();
         this.loadChose();
         this.checkEula();
+        System.out.println("Ready");
     }
 
     public void onChoseLang(ActionEvent event) {

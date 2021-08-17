@@ -25,7 +25,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
         Stage stage = event.getStage();
         displayService.initialize(stage, fxWeaver);
-        displayService.displayScene("account");
+        displayService.displayScene("Account");
         /*
          * stage.setScene(new Scene(fxWeaver.loadView(AccountController.class)));
          * stage.show();

@@ -122,10 +122,8 @@ public class DisplayService {
     }
 
     private void loadDefaultScenes() {
-        DisplayScene accountScene = new DisplayScene("account", "/fxml/account.fxml");
+        DisplayScene accountScene = new DisplayScene("Account", weaver);
         scenes.put(accountScene.getName(), accountScene);
-        DisplayScene clientScene = new DisplayScene("client", "/fxml/client.fxml");
-        scenes.put(clientScene.getName(), clientScene);
     }
 
     private void loadFromFolder() {

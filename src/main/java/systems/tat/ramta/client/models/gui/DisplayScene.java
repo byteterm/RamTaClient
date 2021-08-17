@@ -2,22 +2,20 @@ package systems.tat.ramta.client.models.gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-
-import java.io.IOException;
-import java.util.Objects;
+import net.rgielen.fxweaver.core.FxWeaver;
 
 public class DisplayScene {
 
-    public static String fxmlPath;
+    public static FxWeaver fxmlWeaver;
     private final String name;
     private Scene scene;
 
-    public DisplayScene(String name, String path) {
+    public DisplayScene(String name, FxWeaver weaver) {
         this.name = name;
-        fxmlPath = path;
+        fxmlWeaver = weaver;
         try {
-            this.scene = new Scene(FXMLLoader.load(Objects.requireNonNull(DisplayScene.class.getResource(path))));
-        } catch (IOException exception) {
+            this.scene = new Scene(weaver.loadView(Class.forName("systems.tat.ramta.client.controller.gui." + name + "Controller")));
+        } catch (ClassNotFoundException exception) {
             exception.printStackTrace();
         }
     }
@@ -26,8 +24,8 @@ public class DisplayScene {
         return name;
     }
 
-    public String getFxmlPath() {
-        return fxmlPath;
+    public FxWeaver getFxmlWeaver() {
+        return fxmlWeaver;
     }
 
     public Scene getScene() {
