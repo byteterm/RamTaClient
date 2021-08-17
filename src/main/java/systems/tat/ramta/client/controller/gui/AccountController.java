@@ -4,21 +4,18 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import systems.tat.ramta.client.RamTaClientFX;
+import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
 import systems.tat.ramta.client.service.LanguageService;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 @Component
 @FxmlView("/fxml/account.fxml")
-public class AccountController implements Initializable {
+public class AccountController {
 
     /*
     * General
@@ -63,21 +60,28 @@ public class AccountController implements Initializable {
     public PasswordField signUpPasswordInput;
     public Label rulesLink;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+
+    private final Client client;
+    private final LanguageService languageService;
+
+    public AccountController(Client client, LanguageService languageService) {
+        this.client = client;
+        this.languageService = languageService;
+    }
+
+    @FXML
+    public void initialize() {
         signUpBtn.setDisable(true);
         showSignIn();
         this.loadLanguages();
         this.loadChose();
         this.checkEula();
-        System.out.println("Ready");
     }
 
     public void onChoseLang(ActionEvent event) {
-        LanguageService service = RamTaClientFX.getLanguageService();
         String[] lang = languageChoice.getValue().split("[|]");
         lang[1] = lang[1].replaceAll(" ", "");
-        service.selectLanguage(lang[1]);
+        languageService.selectLanguage(lang[1]);
         this.loadLanguages();
     }
 
@@ -99,6 +103,10 @@ public class AccountController implements Initializable {
     @FXML
     public void onMinimize(ActionEvent event) {
 
+    }
+
+    @FXML
+    public void onRegister(ActionEvent actionEvent) {
     }
 
     private void loadLanguages() {
@@ -151,8 +159,7 @@ public class AccountController implements Initializable {
     }
 
     private void registerLangObject(Labeled node, ReflectKey... reflectKey) {
-        LanguageService service = RamTaClientFX.getLanguageService();
-        String text = service.getMessage("account", node.getId());
+        String text = languageService.getMessage("account", node.getId());
         if(reflectKey.length > 0) {
             for(ReflectKey keys : reflectKey) {
                text = text.replace(keys.getReflect(), keys.getKey());
@@ -162,8 +169,7 @@ public class AccountController implements Initializable {
     }
 
     private void registerPromText(TextInputControl control, ReflectKey... reflectKey) {
-        LanguageService service = RamTaClientFX.getLanguageService();
-        String text = service.getMessage("account", control.getId());
+        String text = languageService.getMessage("account", control.getId());
         if(reflectKey.length > 0) {
             for(ReflectKey keys : reflectKey) {
                 text = text.replace(keys.getReflect(), keys.getKey());
@@ -173,13 +179,11 @@ public class AccountController implements Initializable {
     }
 
     private void loadChose() {
-        LanguageService service = RamTaClientFX.getLanguageService();
-        for(String string : service.getLanguages().keySet()) {
-            languageChoice.getItems().add(service.getLanguages().get(string).getUnicode() + " | " + string);
+        for(String string : languageService.getLanguages().keySet()) {
+            languageChoice.getItems().add(languageService.getLanguages().get(string).getUnicode() + " | " + string);
         }
-        languageChoice.setValue(service.getLanguages().get(service.getCurrentLanguages()).getUnicode() + " | "
-        + service.getCurrentLanguages());
+        languageChoice.setValue(languageService.getLanguages().get(languageService.getCurrentLanguages()).getUnicode() + " | "
+        + languageService.getCurrentLanguages());
         languageChoice.setOnAction(this::onChoseLang);
     }
-
 }

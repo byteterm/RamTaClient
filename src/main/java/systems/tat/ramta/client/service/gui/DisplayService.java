@@ -30,7 +30,10 @@ public class DisplayService {
     private FxWeaver weaver;
     private TemplateObject currentTemplate;
 
-    public DisplayService() {
+    private final SettingService settingService;
+
+    public DisplayService(SettingService settingService) {
+        this.settingService = settingService;
     }
 
     public void initialize(Stage stage, FxWeaver weaver) {
@@ -106,7 +109,7 @@ public class DisplayService {
     }
 
     private void catchInfo() {
-        SettingService service = RamTaClientFX.getSettingService();
+        SettingService service = settingService;
 
         if(!(service.getConfigs().containsKey("generalConf"))) {
             currentTemplate = getTemplateObject("default");

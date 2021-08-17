@@ -8,21 +8,15 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import systems.tat.ramta.client.event.StageReadyEvent;
 import systems.tat.ramta.client.service.LanguageService;
-import systems.tat.ramta.client.service.gui.DisplayService;
 import systems.tat.ramta.client.service.settings.SettingService;
 
 public class RamTaClientFX extends Application {
 
     private ConfigurableApplicationContext applicationContext;
 
-    private static SettingService settingService;
-    private static LanguageService languageService;
-
     @Override
     public void init() throws Exception {
         applicationContext = new SpringApplicationBuilder(RamTaClientApplication.class).run();
-        settingService = new SettingService();
-        languageService = new LanguageService();
     }
 
     @Override
@@ -35,13 +29,4 @@ public class RamTaClientFX extends Application {
         applicationContext.close();
         Platform.exit();
     }
-
-    public static SettingService getSettingService() {
-        return settingService;
-    }
-
-    public static LanguageService getLanguageService() {
-        return languageService;
-    }
-
 }
