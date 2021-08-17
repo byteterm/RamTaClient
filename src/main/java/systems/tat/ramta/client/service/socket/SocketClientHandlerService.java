@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import systems.tat.ramta.client.enums.ClientStatus;
 import systems.tat.ramta.client.lib.message.Message;
-import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.packets.out.PacketOutHandshake;
 
 @EqualsAndHashCode(callSuper = false)
@@ -21,12 +20,12 @@ import systems.tat.ramta.client.packets.out.PacketOutHandshake;
 public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
 
     private Channel channel;
-    private final Client client;
     private final Logger logger = LoggerFactory.getLogger(SocketClientHandlerService.class);
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         setChannel(ctx.channel());
+        logger.info("Connected to Server");
         new PacketOutHandshake(this, ClientStatus.LoginIn);
     }
 
@@ -37,13 +36,6 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
 
     public void sendMessage(Message message) {
         sendMessage(message.toJson());
-
-        while (channel.isActive()) {
-           logger.info(client.getUsername());
-           try {
-               Thread.sleep(2000);
-           } catch (Exception ignored) {}
-        }
     }
 
     public void sendMessage(String message) {
