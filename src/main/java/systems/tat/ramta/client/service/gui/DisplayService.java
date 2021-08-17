@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.stereotype.Service;
-import systems.tat.ramta.client.RamTaClientFX;
 import systems.tat.ramta.client.models.config.ConfigFile;
 import systems.tat.ramta.client.models.gui.DisplayScene;
 import systems.tat.ramta.client.models.gui.TemplateObject;
