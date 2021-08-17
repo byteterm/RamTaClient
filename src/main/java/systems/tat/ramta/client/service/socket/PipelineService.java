@@ -9,6 +9,7 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.util.CharsetUtil;
 import org.springframework.stereotype.Service;
 import systems.tat.ramta.client.utils.ResourcesUtils;
 
@@ -36,14 +37,14 @@ public class PipelineService extends ChannelInitializer<Channel> {
         pipeline.addLast(socketClientHandler);
         // Add ssl
         //pipeline.addLast(sslContext.newHandler(ch.alloc(), "client.ramta.tat.systems", 7777));
-        pipeline.addLast(sslContext.newHandler(ch.alloc()));
+        //pipeline.addLast(sslContext.newHandler(ch.alloc()));
 
         // text line codec
-        pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-        pipeline.addLast(new StringDecoder());
-        pipeline.addLast(new StringEncoder());
+        //pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
+        pipeline.addLast("decoder", new StringDecoder(CharsetUtil.UTF_8));
+        pipeline.addLast("encoder", new StringEncoder(CharsetUtil.UTF_8));
 
         // Business logic
-        pipeline.addLast(clientStringHandler);
+        pipeline.addLast("handler", clientStringHandler);
     }
 }

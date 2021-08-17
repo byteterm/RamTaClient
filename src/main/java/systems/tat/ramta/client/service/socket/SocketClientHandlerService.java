@@ -9,7 +9,9 @@ import lombok.EqualsAndHashCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import systems.tat.ramta.client.enums.ClientStatus;
 import systems.tat.ramta.client.lib.message.Message;
+import systems.tat.ramta.client.packets.out.PacketOutHandshake;
 
 @EqualsAndHashCode(callSuper = false)
 @Service
@@ -24,6 +26,7 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         setChannel(ctx.channel());
         logger.info("Connected to Server");
+        new PacketOutHandshake(this, ClientStatus.LoginIn);
     }
 
     @Override
@@ -38,7 +41,10 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     public void sendMessage(String message) {
         if (channel != null
                 && channel.isActive()) {
+            logger.info("Message Send");
             channel.writeAndFlush(message);
+        } else {
+            logger.info("Message not send");
         }
     }
 

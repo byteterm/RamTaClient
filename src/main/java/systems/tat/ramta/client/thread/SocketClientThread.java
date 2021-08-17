@@ -7,9 +7,11 @@ import io.netty.channel.EventLoopGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import systems.tat.ramta.client.enums.ClientStatus;
 import systems.tat.ramta.client.lib.network.NettyUtil;
+import systems.tat.ramta.client.packets.out.PacketOutHandshake;
 import systems.tat.ramta.client.service.socket.PipelineService;
-import systems.tat.ramta.client.service.socket.SocketClientService;
+import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
 
 @Component
 public class SocketClientThread implements Runnable {
@@ -17,13 +19,15 @@ public class SocketClientThread implements Runnable {
     private final Logger logger = LoggerFactory.getLogger(SocketClientThread.class);
 
     private final PipelineService pipelineService;
+    private final SocketClientHandlerService socketClientHandlerService;
 
-    public SocketClientThread(PipelineService pipelineService) {
+    public SocketClientThread(PipelineService pipelineService, SocketClientHandlerService socketClientHandlerService) {
         this.pipelineService = pipelineService;
+        this.socketClientHandlerService = socketClientHandlerService;
     }
 
     @Override
-    public void run() {
+    public void run(){
 
         while (true) {
             if (!connect()) {
