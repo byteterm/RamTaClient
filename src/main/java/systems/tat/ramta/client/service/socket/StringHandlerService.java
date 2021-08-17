@@ -14,13 +14,19 @@ import java.util.Base64;
 @ChannelHandler.Sharable
 public class StringHandlerService extends BasicStringHandler {
 
+    private final SocketClientHandlerService socketClientHandlerService;
+
+    public StringHandlerService(SocketClientHandlerService socketClientHandlerService) {
+        this.socketClientHandlerService = socketClientHandlerService;
+    }
+
     @Override
     public void handleMessage(Message message, String originalMessage, Channel channel) {
         try {
             Class<?> packetClass = Class.forName("systems.tat.ramta.client.packets.in.PacketIn" + message.getType());
-            Constructor<?> constructor = packetClass.getConstructor(Message.class, Channel.class);
+            Constructor<?> constructor = packetClass.getConstructor(Message.class, Channel.class, SocketClientHandlerService.class);
 
-            constructor.newInstance(message, channel);
+            constructor.newInstance(message, channel, socketClientHandlerService);
         } catch (Exception ex) {
             System.out.println("No Handler for packet " + message.getType() + " found");
         }

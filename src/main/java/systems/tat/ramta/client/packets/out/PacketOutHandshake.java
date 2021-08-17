@@ -21,6 +21,6 @@ public class PacketOutHandshake {
         socketClientHandlerService.sendMessage(Message.create()
                 .setType("Handshake")
                 .setTarget("CLOUD")
-                .set("Status", "asd"));
+                .set("Status", status));
     }
 }

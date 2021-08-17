@@ -11,13 +11,13 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class FrontendService {
+public class FrontendHandler {
 
     private final File EXTRACT_TEMPLATE_LOCATION = new File(ResourcesUtils.getPath("frontend/displayed/"));
 
     private final TemplateObject template;
 
-    public FrontendService(TemplateObject template) {
+    public FrontendHandler(TemplateObject template) {
         this.template = template;
     }
 

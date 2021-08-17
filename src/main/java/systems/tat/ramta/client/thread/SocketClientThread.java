@@ -30,6 +30,11 @@ public class SocketClientThread implements Runnable {
             if (!connect()) {
                 connect();
             }
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ignored) {
+            }
         }
     }
 

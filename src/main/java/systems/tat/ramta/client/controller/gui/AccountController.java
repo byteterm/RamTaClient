@@ -8,10 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
-import systems.tat.ramta.client.RamTaClientFX;
 import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
+import systems.tat.ramta.client.packets.out.PacketOutRegisterAccount;
 import systems.tat.ramta.client.service.LanguageService;
+import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
 
 @Component
 @FxmlView("/fxml/account.fxml")
@@ -62,10 +63,12 @@ public class AccountController {
 
 
     private final Client client;
+    private final SocketClientHandlerService socketClientHandlerService;
     private final LanguageService languageService;
 
-    public AccountController(Client client, LanguageService languageService) {
+    public AccountController(Client client, SocketClientHandlerService socketClientHandlerService, LanguageService languageService) {
         this.client = client;
+        this.socketClientHandlerService = socketClientHandlerService;
         this.languageService = languageService;
     }
 
@@ -107,6 +110,11 @@ public class AccountController {
 
     @FXML
     public void onRegister(ActionEvent actionEvent) {
+        client.setUsername(signUpTextInputName.getText());
+        client.setEmail(signUpTextInputEmail.getText());
+        client.setPassword(signUpPasswordInput.getText());
+
+        new PacketOutRegisterAccount(socketClientHandlerService, client);
     }
 
     private void loadLanguages() {
