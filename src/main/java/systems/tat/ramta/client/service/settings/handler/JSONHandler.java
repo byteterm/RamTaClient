@@ -2,6 +2,7 @@ package systems.tat.ramta.client.service.settings.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import systems.tat.ramta.client.utils.ResourcesUtils;
 
@@ -28,6 +29,11 @@ public class JSONHandler implements IFileHandler {
             }
         }
         return result;
+    }
+
+    public String getString(String key) {
+        JsonElement element = json.get(key);
+        return element.getAsString();
     }
 
     public File getJsonFile() {

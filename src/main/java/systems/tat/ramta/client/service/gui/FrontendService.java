@@ -8,10 +8,12 @@ import systems.tat.ramta.client.models.gui.TemplateObject;
 import systems.tat.ramta.client.utils.ResourcesUtils;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class FrontendService {
 
-    private final File EXTRACT_TEMPLATE_LOCATION = new File(ResourcesUtils.getExecutePath().getPath() + "/frontend/displayed/");
+    private final File EXTRACT_TEMPLATE_LOCATION = new File(ResourcesUtils.getPath("frontend/displayed/"));
 
     private final TemplateObject template;
 
@@ -20,7 +22,13 @@ public class FrontendService {
     }
 
     public void include(DisplayScene displayScene) {
-        String file = "file:///" + EXTRACT_TEMPLATE_LOCATION.getPath().replace("\\", "/") + "/" + template.getName() + "/css/";
+        String file = null;
+        try {
+            URL test = new File("frontend/displayed/" + template.getName() + "/css/").toURI().toURL();
+            file = "file:///" + test.getPath();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         try {
             CSSInfo info = readCSSInfo();
             Scene scene = displayScene.getScene();
@@ -50,7 +58,7 @@ public class FrontendService {
     }
 
     private File variableCSS(CSSInfo info, String path, String name) {
-        path = path.replace("file:///", "");
+        path = path.replace("file:///", "").replaceAll("%20", " ");
         File file = new File(path + name);
         String css = ResourcesUtils.read(file);
         String override = css;

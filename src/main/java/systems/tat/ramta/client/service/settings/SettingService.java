@@ -12,7 +12,7 @@ import java.util.Objects;
 @Service
 public class SettingService {
 
-    private final File RESOURCE_LOCATION = new File(ResourcesUtils.getExecutePath().getPath() + "/system/");
+    private final File RESOURCE_LOCATION = new File(ResourcesUtils.getPath("system/"));
     private final Map<String, ConfigFile> configs = new HashMap<>();
 
     public SettingService() {

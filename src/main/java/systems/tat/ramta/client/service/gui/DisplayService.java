@@ -23,12 +23,15 @@ public class DisplayService {
 
     private final List<TemplateObject> templates = new ArrayList<>();
     private final Map<String, DisplayScene> scenes = new HashMap<>();
-    private final File RESOURCE_LOCATION = new File(ResourcesUtils.getExecutePath().getPath() + "/frontend/templates/");
-    private final File EXTRACT_TEMPLATE_LOCATION = new File(ResourcesUtils.getExecutePath().getPath() + "/frontend/displayed/");
+    private final File RESOURCE_LOCATION = new File(ResourcesUtils.getPath("frontend/templates/"));
+    private final File EXTRACT_TEMPLATE_LOCATION = new File(ResourcesUtils.getPath("frontend/displayed/"));
 
     private Stage stage;
     private FxWeaver weaver;
     private TemplateObject currentTemplate;
+
+    public DisplayService() {
+    }
 
     public void initialize(Stage stage, FxWeaver weaver) {
         this.stage = stage;
@@ -95,7 +98,7 @@ public class DisplayService {
     }
 
     private void setup() {
-        this.stage.initStyle(StageStyle.DECORATED);
+        this.stage.initStyle(StageStyle.UNDECORATED);
         this.loadDefaultScenes();
         this.loadFromFolder();
         this.catchInfo();

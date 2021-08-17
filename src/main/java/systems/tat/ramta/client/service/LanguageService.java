@@ -2,18 +2,20 @@ package systems.tat.ramta.client.service;
 
 import systems.tat.ramta.client.RamTaClientFX;
 import systems.tat.ramta.client.models.config.ConfigFile;
+import systems.tat.ramta.client.models.lang.Language;
 import systems.tat.ramta.client.service.settings.SettingService;
 import systems.tat.ramta.client.service.settings.handler.JSONHandler;
 import systems.tat.ramta.client.service.settings.handler.PropertiesHandler;
 import systems.tat.ramta.client.utils.ResourcesUtils;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class LanguageService {
 
-    private final File RESOURCE_LOCATION = new File(ResourcesUtils.getExecutePath().getPath() + "/languages/");
-    private final Map<String, File> languages = new HashMap<>();
+    private final File RESOURCE_LOCATION = new File(ResourcesUtils.getPath("languages/"));
+    private final Map<String, Language> languages = new HashMap<>();
 
     private String currentLanguages;
 
@@ -21,7 +23,7 @@ public class LanguageService {
         this.loadLanguages();
     }
 
-    public Map<String, File> getLanguages() {
+    public Map<String, Language> getLanguages() {
         return languages;
     }
 
@@ -34,8 +36,9 @@ public class LanguageService {
             return "Error: NLWS";
         }
 
-        JSONHandler handler = new JSONHandler(languages.get(currentLanguages).getPath());
-        return handler.getString(sceneName, languageKey);
+        JSONHandler handler = new JSONHandler(languages.get(currentLanguages).getLanguageFile().getPath());
+        byte[] original = handler.getString(sceneName, languageKey).getBytes();
+        return new String(original, StandardCharsets.UTF_8);
     }
 
     public void selectLanguage(String language) {
@@ -50,7 +53,8 @@ public class LanguageService {
     private void loadLanguages() {
         for(File file : Objects.requireNonNull(RESOURCE_LOCATION.listFiles())) {
             String[] array = file.getName().split("\\.");
-            languages.put(array[0], file);
+            Language language = new Language(file);
+            languages.put(array[0], language);
         }
         this.catchLanguage();
     }

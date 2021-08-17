@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import systems.tat.ramta.client.RamTaClientFX;
 import systems.tat.ramta.client.event.StageReadyEvent;
 import systems.tat.ramta.client.service.gui.DisplayService;
 import systems.tat.ramta.client.service.socket.SocketClientService;
@@ -14,9 +15,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     private final FxWeaver fxWeaver;
     private static DisplayService displayService;
 
-    public StageInitializer(FxWeaver fxWeaver, DisplayService IDisplayService) {
+    public StageInitializer(FxWeaver fxWeaver, DisplayService service) {
         this.fxWeaver = fxWeaver;
-        displayService = IDisplayService;
+        displayService = service;
     }
 
     @Override

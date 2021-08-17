@@ -77,6 +77,15 @@ public class ResourcesUtils {
         return new File(System.getProperty("user.dir"));
     }
 
+    public static String getPath(String extended) {
+       String userDir = System.getProperty("user.dir").replaceAll("%20", " ");
+        String result = userDir + extended;
+       if(!(extended.startsWith("/"))) {
+           result = userDir + "/" + extended;
+       }
+       return result;
+    }
+
     public static boolean trueFormat(File file, String value) {
         if(!(file.getName().contains("."))) {
             return false;
@@ -90,8 +99,10 @@ public class ResourcesUtils {
         return type.equals(format);
     }
 
-    public static String read(File file) {
+    public static String read(File fileIn) {
         try {
+            String filePath = fileIn.getPath().replaceAll("%20", " ");
+            File file = new File(filePath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String result = null;
             StringBuilder builder = new StringBuilder();
