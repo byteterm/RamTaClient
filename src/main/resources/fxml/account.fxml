@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="systems.tat.ramta.client.controller.gui.AccountController">
+<AnchorPane fx:id="mainFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="systems.tat.ramta.client.controller.gui.AccountController">
    <children>
       <BorderPane prefHeight="613.0" prefWidth="1151.0" styleClass="container">
          <left>
@@ -72,7 +72,7 @@
             </StackPane>
          </center>
       </BorderPane>
-      <Pane prefHeight="35.0" prefWidth="1150.0">
+      <Pane fx:id="header" prefHeight="35.0" prefWidth="1150.0">
          <children>
             <Button fx:id="exit" layoutX="1116.0" mnemonicParsing="false" onAction="#onCloseRequest" prefHeight="35.0" prefWidth="35.0" text="X">
                <styleClass>

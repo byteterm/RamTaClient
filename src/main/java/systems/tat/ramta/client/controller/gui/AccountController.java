@@ -5,13 +5,16 @@ import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
-import systems.tat.ramta.client.RamTaClientFX;
 import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
 import systems.tat.ramta.client.service.LanguageService;
+import systems.tat.ramta.client.service.gui.DialogService;
+import systems.tat.ramta.client.service.gui.DisplayService;
 
 @Component
 @FxmlView("/fxml/account.fxml")
@@ -20,6 +23,8 @@ public class AccountController {
     /*
     * General
     */
+    public Pane header;
+    public AnchorPane mainFrame;
     public Label clientVersion;
     public Button exit;
     public Button minimize;
@@ -60,13 +65,19 @@ public class AccountController {
     public PasswordField signUpPasswordInput;
     public Label rulesLink;
 
+    private static double yOffset = 0;
+    private static double xOffset = 0;
 
     private final Client client;
     private final LanguageService languageService;
+    private final DialogService dialogService;
+    private final DisplayService display;
 
-    public AccountController(Client client, LanguageService languageService) {
+    public AccountController(Client client, LanguageService languageService, DialogService dialogService, DisplayService display) {
         this.client = client;
         this.languageService = languageService;
+        this.dialogService = dialogService;
+        this.display = display;
     }
 
     @FXML
@@ -76,6 +87,7 @@ public class AccountController {
         this.loadLanguages();
         this.loadChose();
         this.checkEula();
+        this.movable();
     }
 
     public void onChoseLang(ActionEvent event) {
@@ -102,11 +114,23 @@ public class AccountController {
 
     @FXML
     public void onMinimize(ActionEvent event) {
-
+        dialogService.createDialog(null, "Test du Hure!");
     }
 
     @FXML
     public void onRegister(ActionEvent actionEvent) {
+    }
+
+    private void movable() {
+        header.setOnMousePressed(event -> {
+            xOffset = display.getStage().getX() - event.getScreenX();
+            yOffset = display.getStage().getY() - event.getScreenY();
+        });
+
+        header.setOnMouseDragged(event -> {
+            display.getStage().setX(event.getScreenX() + xOffset);
+            display.getStage().setY(event.getScreenY() + yOffset);
+        });
     }
 
     private void loadLanguages() {
