@@ -5,16 +5,14 @@ import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
+import systems.tat.ramta.client.packets.out.PacketOutRegisterAccount;
 import systems.tat.ramta.client.service.LanguageService;
-import systems.tat.ramta.client.service.gui.DialogService;
-import systems.tat.ramta.client.service.gui.DisplayService;
+import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
 
 @Component
 @FxmlView("/fxml/account.fxml")
@@ -23,8 +21,6 @@ public class AccountController {
     /*
     * General
     */
-    public Pane header;
-    public AnchorPane mainFrame;
     public Label clientVersion;
     public Button exit;
     public Button minimize;
@@ -65,19 +61,15 @@ public class AccountController {
     public PasswordField signUpPasswordInput;
     public Label rulesLink;
 
-    private static double yOffset = 0;
-    private static double xOffset = 0;
 
     private final Client client;
+    private final SocketClientHandlerService socketClientHandlerService;
     private final LanguageService languageService;
-    private final DialogService dialogService;
-    private final DisplayService display;
 
-    public AccountController(Client client, LanguageService languageService, DialogService dialogService, DisplayService display) {
+    public AccountController(Client client, SocketClientHandlerService socketClientHandlerService, LanguageService languageService) {
         this.client = client;
+        this.socketClientHandlerService = socketClientHandlerService;
         this.languageService = languageService;
-        this.dialogService = dialogService;
-        this.display = display;
     }
 
     @FXML
@@ -87,7 +79,6 @@ public class AccountController {
         this.loadLanguages();
         this.loadChose();
         this.checkEula();
-        this.movable();
     }
 
     public void onChoseLang(ActionEvent event) {
@@ -114,23 +105,16 @@ public class AccountController {
 
     @FXML
     public void onMinimize(ActionEvent event) {
-        dialogService.createDialog(null, "Test du Hure!");
+
     }
 
     @FXML
     public void onRegister(ActionEvent actionEvent) {
-    }
+        client.setUsername(signUpTextInputName.getText());
+        client.setEmail(signUpTextInputEmail.getText());
+        client.setPassword(signUpPasswordInput.getText());
 
-    private void movable() {
-        header.setOnMousePressed(event -> {
-            xOffset = display.getStage().getX() - event.getScreenX();
-            yOffset = display.getStage().getY() - event.getScreenY();
-        });
-
-        header.setOnMouseDragged(event -> {
-            display.getStage().setX(event.getScreenX() + xOffset);
-            display.getStage().setY(event.getScreenY() + yOffset);
-        });
+        new PacketOutRegisterAccount(socketClientHandlerService, client);
     }
 
     private void loadLanguages() {

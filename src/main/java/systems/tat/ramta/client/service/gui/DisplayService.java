@@ -43,7 +43,7 @@ public class DisplayService {
 
     public void displayScene(String name) {
         DisplayScene displayScene = scenes.get(name);
-        FrontendService service = new FrontendService(currentTemplate);
+        FrontendHandler service = new FrontendHandler(currentTemplate);
         service.include(displayScene);
         stage.setScene(displayScene.getScene());
         stage.show();
