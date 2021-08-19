@@ -4,7 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,11 @@ import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
 import systems.tat.ramta.client.packets.out.PacketOutRegisterAccount;
 import systems.tat.ramta.client.service.LanguageService;
+import systems.tat.ramta.client.service.gui.DisplayService;
 import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
+import systems.tat.ramta.client.utils.FXUtils;
+
+import java.util.List;
 
 @Component
 @FxmlView("/fxml/account.fxml")
@@ -21,6 +27,8 @@ public class AccountController {
     /*
     * General
     */
+    public Pane header;
+    public AnchorPane mainFrame;
     public Label clientVersion;
     public Button exit;
     public Button minimize;
@@ -61,24 +69,33 @@ public class AccountController {
     public PasswordField signUpPasswordInput;
     public Label rulesLink;
 
+    private List<Node> nodes;
 
     private final Client client;
     private final SocketClientHandlerService socketClientHandlerService;
     private final LanguageService languageService;
+    private final DisplayService displayService;
 
-    public AccountController(Client client, SocketClientHandlerService socketClientHandlerService, LanguageService languageService) {
+    public AccountController(
+            Client client,
+            SocketClientHandlerService socketClientHandlerService,
+            LanguageService languageService,
+            DisplayService displayService) {
         this.client = client;
         this.socketClientHandlerService = socketClientHandlerService;
         this.languageService = languageService;
+        this.displayService = displayService;
     }
 
     @FXML
     public void initialize() {
+        nodes = FXUtils.catchNode(mainFrame);
         signUpBtn.setDisable(true);
         showSignIn();
         this.loadLanguages();
         this.loadChose();
         this.checkEula();
+        FXUtils.moveAbleWindow(header, displayService.getStage());
     }
 
     public void onChoseLang(ActionEvent event) {
@@ -105,7 +122,7 @@ public class AccountController {
 
     @FXML
     public void onMinimize(ActionEvent event) {
-
+        displayService.getStage().setIconified(true);
     }
 
     @FXML
@@ -118,37 +135,24 @@ public class AccountController {
     }
 
     private void loadLanguages() {
+        for(Node node : nodes) {
+            if(node.getId() != null) {
+                if(!node.getId().equals("exit")) {
+                    if(!node.getId().equals("minimize")) {
+                        System.out.println("Node : " + node.getId() + " ACCEPT");
+                        registerLangObject(node);
+                    }
+                } else {
+                    System.out.println("Node : " + node.getId() + " DENIED");
+                }
+            }
+        }
         registerLangObject(clientVersion, new ReflectKey("ver", "0.0.1-beta"));
-        registerLangObject(signInLeftHeader);
-        registerLangObject(signInText);
-        registerLangObject(signInBtn);
-        registerLangObject(signInRightHeader);
-        registerLangObject(signInSignUpBtn);
-        registerLangObject(passwordHelp);
-        registerLangObject(remember);
-        registerPromText(signInPasswordInput);
-        registerPromText(signInTextInput);
-
-        registerLangObject(signUpLeftHeader);
-        registerLangObject(signUpText);
-        registerLangObject(signUpSignInBtn);
-        registerLangObject(signUpBtn);
-        registerLangObject(acceptBox);
-        registerLangObject(signUpRightHeader);
-        registerLangObject(rulesLink);
-        registerPromText(signUpTextInputEmail);
-        registerPromText(signUpTextInputName);
-        registerPromText(signUpPasswordInput);
-
     }
 
     private void checkEula() {
         acceptBox.setOnAction(event -> {
-            if(acceptBox.isSelected()) {
-                signUpBtn.setDisable(false);
-            } else {
-                signUpBtn.setDisable(true);
-            }
+            signUpBtn.setDisable(!acceptBox.isSelected());
         });
     }
 
@@ -166,31 +170,25 @@ public class AccountController {
         signInLeftPage.setVisible(true);
     }
 
-    private void registerLangObject(Labeled node, ReflectKey... reflectKey) {
+    private void registerLangObject(Node node, ReflectKey... reflectKey) {
         String text = languageService.getMessage("account", node.getId());
         if(reflectKey.length > 0) {
             for(ReflectKey keys : reflectKey) {
                text = text.replace(keys.getReflect(), keys.getKey());
             }
         }
-        node.setText(text);
-    }
-
-    private void registerPromText(TextInputControl control, ReflectKey... reflectKey) {
-        String text = languageService.getMessage("account", control.getId());
-        if(reflectKey.length > 0) {
-            for(ReflectKey keys : reflectKey) {
-                text = text.replace(keys.getReflect(), keys.getKey());
-            }
+        if(node instanceof Labeled labeled) {
+            labeled.setText(text);
+        } else if(node instanceof TextInputControl control) {
+            control.setPromptText(text);
         }
-        control.setPromptText(text);
     }
 
     private void loadChose() {
         for(String string : languageService.getLanguages().keySet()) {
-            languageChoice.getItems().add(languageService.getLanguages().get(string).getUnicode() + " | " + string);
+            languageChoice.getItems().add("   " + languageService.getLanguages().get(string).getUnicode() + " | " + string);
         }
-        languageChoice.setValue(languageService.getLanguages().get(languageService.getCurrentLanguages()).getUnicode() + " | "
+        languageChoice.setValue("   " + languageService.getLanguages().get(languageService.getCurrentLanguages()).getUnicode() + " | "
         + languageService.getCurrentLanguages());
         languageChoice.setOnAction(this::onChoseLang);
     }
