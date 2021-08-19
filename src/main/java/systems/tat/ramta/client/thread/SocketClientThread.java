@@ -28,6 +28,7 @@ public class SocketClientThread implements Runnable {
 
         while (true) {
             if (!connect()) {
+                logger.info("Can't connect to server...");
                 connect();
             }
 
@@ -50,7 +51,7 @@ public class SocketClientThread implements Runnable {
         ChannelFuture f = null;
 
         try {
-            f = b.connect("127.0.0.1", 7777).sync();
+            f = b.connect("client.ramta.tat.systems", 30001).sync();
             f.channel().closeFuture().sync();
         } catch (Exception e) {
             return false;
