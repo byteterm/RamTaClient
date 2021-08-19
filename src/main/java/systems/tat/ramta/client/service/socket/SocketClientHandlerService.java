@@ -36,12 +36,13 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     }
 
     public void sendMessage(Message message) {
-        sendMessage(message.toJson());
+        sendMessage(message.toJson(), message.getType());
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(String message, String type) {
         if (channel != null
                 && channel.isActive()) {
+            logger.info("Sending packet " + type);
             channel.writeAndFlush(message);
         }
     }
