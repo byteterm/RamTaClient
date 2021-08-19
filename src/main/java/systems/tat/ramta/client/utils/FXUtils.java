@@ -24,6 +24,10 @@ public class FXUtils {
         });
     }
 
+    public static boolean checkNull(String string) {
+        return !(string.isEmpty() | string.isBlank());
+    }
+
     public static List<Node> catchNode(Pane pane) {
         return paneNodes(pane, new ArrayList<>());
     }

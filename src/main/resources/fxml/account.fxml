@@ -50,7 +50,7 @@
                <children>
                   <Pane fx:id="signUpPage" prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <JFXButton fx:id="signUpBtn" onAction="#onRegister" layoutX="341.0" layoutY="440.0" prefHeight="40.0" prefWidth="140.0" styleClass="send-btn" text="Sign Up" />
+                        <JFXButton fx:id="signUpBtn" layoutX="341.0" layoutY="440.0" onAction="#onRegister" prefHeight="40.0" prefWidth="140.0" styleClass="send-btn" text="Sign Up" />
                         <JFXCheckBox fx:id="acceptBox" layoutX="161.0" layoutY="450.0" maxWidth="120.0" prefHeight="18.0" prefWidth="90.0" styleClass="remember" text="Accept eula" />
                         <TextField fx:id="signUpTextInputEmail" alignment="CENTER" layoutX="161.0" layoutY="274.0" prefHeight="40.0" prefWidth="320.0" promptText="E-mail" styleClass="input-style" />
                         <Label fx:id="signUpRightHeader" alignment="CENTER" contentDisplay="TOP" layoutX="233.0" layoutY="60.0" prefHeight="50.0" prefWidth="175.0" styleClass="header-label" text="Sign Up" />
@@ -85,5 +85,6 @@
       </Pane>
       <ImageView fitHeight="128.0" fitWidth="256.0" layoutX="120.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
       <ChoiceBox fx:id="languageChoice" layoutX="10.0" layoutY="575.0" prefHeight="0.0" prefWidth="70.0" styleClass="language-choice" />
+      <AnchorPane fx:id="blurPane" prefHeight="613.0" prefWidth="1151.0" styleClass="blur-pane" visible="false" />
    </children>
 </AnchorPane>

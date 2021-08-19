@@ -101,6 +101,7 @@ public class DisplayService {
 
     private void setup() {
         this.stage.initStyle(StageStyle.UNDECORATED);
+        this.stage.setTitle("Ramta Client");
         this.loadDefaultScenes();
         this.loadFromFolder();
         this.catchInfo();

@@ -7,10 +7,8 @@ import io.netty.channel.EventLoopGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import systems.tat.ramta.client.enums.ClientStatus;
 import systems.tat.ramta.client.lib.network.NettyUtil;
 import systems.tat.ramta.client.service.socket.PipelineService;
-import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
 
 @Component
 public class SocketClientThread implements Runnable {

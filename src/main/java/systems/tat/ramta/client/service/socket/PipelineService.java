@@ -41,7 +41,7 @@ public class PipelineService extends ChannelInitializer<Channel> {
         //pipeline.addLast(sslContext.newHandler(ch.alloc()));
 
         // text line codec
-        pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
+        //pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
         pipeline.addLast("decoder", new StringDecoder(CharsetUtil.UTF_8));
         pipeline.addLast("encoder", new StringEncoder(CharsetUtil.UTF_8));
 

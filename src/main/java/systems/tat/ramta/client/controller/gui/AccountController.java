@@ -9,10 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
 import systems.tat.ramta.client.packets.out.PacketOutRegisterAccount;
+import systems.tat.ramta.client.service.ClientInputService;
 import systems.tat.ramta.client.service.LanguageService;
 import systems.tat.ramta.client.service.gui.DisplayService;
 import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
@@ -28,6 +31,7 @@ public class AccountController {
     * General
     */
     public Pane header;
+    public AnchorPane blurPane;
     public AnchorPane mainFrame;
     public Label clientVersion;
     public Button exit;
@@ -71,18 +75,20 @@ public class AccountController {
 
     private List<Node> nodes;
 
+    private final Logger logger = LoggerFactory.getLogger(AccountController.class);
+
     private final Client client;
-    private final SocketClientHandlerService socketClientHandlerService;
+    private final ClientInputService clientInputService;
     private final LanguageService languageService;
     private final DisplayService displayService;
 
     public AccountController(
             Client client,
-            SocketClientHandlerService socketClientHandlerService,
+            ClientInputService clientInputService,
             LanguageService languageService,
             DisplayService displayService) {
         this.client = client;
-        this.socketClientHandlerService = socketClientHandlerService;
+        this.clientInputService = clientInputService;
         this.languageService = languageService;
         this.displayService = displayService;
     }
@@ -127,11 +133,21 @@ public class AccountController {
 
     @FXML
     public void onRegister(ActionEvent actionEvent) {
-        client.setUsername(signUpTextInputName.getText());
-        client.setEmail(signUpTextInputEmail.getText());
-        client.setPassword(signUpPasswordInput.getText());
+        if(FXUtils.checkNull(signUpTextInputName.getText())) {
+            client.setUsername(signUpTextInputName.getText());
+        }
+        if(FXUtils.checkNull(signUpTextInputEmail.getText())) {
+            client.setEmail(signUpTextInputEmail.getText());
+        }
+        if(FXUtils.checkNull(signUpPasswordInput.getText())) {
+            client.setPassword(signUpPasswordInput.getText());
+        }
 
-        new PacketOutRegisterAccount(socketClientHandlerService, client);
+        if(client.getUsername() != null & client.getEmail() != null & client.getPassword() != null) {
+            this.clientInputService.sendRegister(client);
+        } else {
+            logger.warn("Can't send packet when the input is null!");
+        }
     }
 
     private void loadLanguages() {
@@ -139,11 +155,8 @@ public class AccountController {
             if(node.getId() != null) {
                 if(!node.getId().equals("exit")) {
                     if(!node.getId().equals("minimize")) {
-                        System.out.println("Node : " + node.getId() + " ACCEPT");
                         registerLangObject(node);
                     }
-                } else {
-                    System.out.println("Node : " + node.getId() + " DENIED");
                 }
             }
         }
