@@ -8,7 +8,7 @@ public class PacketInTest extends PacketIn {
 
     public PacketInTest(Message message, Channel channel, SocketClientHandlerService socketClientHandlerService) {
         super(message, channel, socketClientHandlerService);
-        socketClientHandlerService.getAccountController().blurPane.setVisible(true);
-        socketClientHandlerService.getAccountController().playLoadingScreen();
+        //socketClientHandlerService.getAccountController().blurPane.setVisible(true);
+        //socketClientHandlerService.getAccountController().playLoadingScreen();
     }
 }

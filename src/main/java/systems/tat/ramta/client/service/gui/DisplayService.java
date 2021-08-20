@@ -28,6 +28,7 @@ public class DisplayService {
     private Stage stage;
     private FxWeaver weaver;
     private TemplateObject currentTemplate;
+    private DisplayScene displayScene;
 
     private final SettingService settingService;
 
@@ -43,6 +44,7 @@ public class DisplayService {
 
     public void displayScene(String name) {
         DisplayScene displayScene = scenes.get(name);
+        this.displayScene = displayScene;
         FrontendHandler service = new FrontendHandler(currentTemplate);
         service.include(displayScene);
         stage.setScene(displayScene.getScene());
@@ -99,6 +101,10 @@ public class DisplayService {
         return currentTemplate;
     }
 
+    public DisplayScene getDisplayScene() {
+        return displayScene;
+    }
+
     private void setup() {
         this.stage.initStyle(StageStyle.UNDECORATED);
         this.stage.setTitle("Ramta Client");
@@ -127,6 +133,9 @@ public class DisplayService {
     private void loadDefaultScenes() {
         DisplayScene accountScene = new DisplayScene("Account", weaver);
         scenes.put(accountScene.getName(), accountScene);
+
+        DisplayScene clientScene = new DisplayScene("Client", weaver);
+        scenes.put(clientScene.getName(), clientScene);
     }
 
     private void loadFromFolder() {

@@ -148,6 +148,17 @@ public class AccountController {
         }
     }
 
+    @FXML
+    public void onLogin(ActionEvent event) {
+        if(FXUtils.checkNull(signInTextInput.getText())) {
+
+        }
+        if(FXUtils.checkNull(signInPasswordInput.getText())) {
+            //Todo: do login stuff niklas
+        }
+        displayService.displayScene("Client");
+    }
+
     public void playLoadingScreen() {
         if(blurPane.isVisible()) {
             AnimateUtils.Bounds(loadingIcon01, Timeline.INDEFINITE, 0.45, "500ms");
@@ -211,4 +222,5 @@ public class AccountController {
         + languageService.getCurrentLanguages());
         languageChoice.setOnAction(this::onChoseLang);
     }
+
 }

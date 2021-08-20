@@ -63,7 +63,7 @@
                      <children>
                         <TextField fx:id="signInTextInput" alignment="CENTER" layoutX="161.0" layoutY="176.0" prefHeight="40.0" prefWidth="320.0" promptText="E-mail or Username" styleClass="input-style" />
                         <PasswordField fx:id="signInPasswordInput" alignment="CENTER" layoutX="161.0" layoutY="274.0" prefHeight="40.0" prefWidth="320.0" promptText="Password" styleClass="input-style" />
-                        <JFXButton fx:id="signInBtn" layoutX="341.0" layoutY="353.0" prefHeight="40.0" prefWidth="140.0" styleClass="send-btn" text="Sign In" />
+                        <JFXButton fx:id="signInBtn" layoutX="341.0" layoutY="353.0" onAction="#onLogin" prefHeight="40.0" prefWidth="140.0" styleClass="send-btn" text="Sign In" />
                         <Label fx:id="signInRightHeader" alignment="CENTER" contentDisplay="TOP" layoutX="233.0" layoutY="60.0" prefHeight="50.0" prefWidth="175.0" styleClass="header-label" text="Sign In" />
                         <JFXCheckBox fx:id="remember" layoutX="161.0" layoutY="364.0" maxWidth="120.0" styleClass="remember" text="Remember me" />
                         <Label fx:id="passwordHelp" alignment="TOP_RIGHT" layoutX="380.0" layoutY="437.0" prefHeight="23.0" prefWidth="100.0" styleClass="password-hyper" text="Forgot password?" />
@@ -86,11 +86,16 @@
       </Pane>
       <ImageView fitHeight="128.0" fitWidth="256.0" layoutX="120.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
       <ChoiceBox fx:id="languageChoice" layoutX="10.0" layoutY="575.0" prefHeight="0.0" prefWidth="70.0" styleClass="language-choice" />
-      <AnchorPane fx:id="blurPane" prefHeight="613.0" prefWidth="1151.0" styleClass="blur-pane">
+      <AnchorPane fx:id="blurPane" prefHeight="613.0" prefWidth="1151.0" styleClass="blur-pane" visible="false">
          <children>
-            <Circle fx:id="loadingIcon01" fill="DODGERBLUE" layoutX="525.0" layoutY="305.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
-            <Circle fx:id="loadingIcon02" fill="DODGERBLUE" layoutX="575.0" layoutY="305.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
-            <Circle fx:id="loadingIcon03" fill="DODGERBLUE" layoutX="625.0" layoutY="305.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
+            <Circle fx:id="loadingIcon01" fill="DODGERBLUE" layoutX="525.0" layoutY="305.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
+            <Circle fx:id="loadingIcon02" fill="DODGERBLUE" layoutX="575.0" layoutY="305.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
+            <Circle fx:id="loadingIcon03" fill="DODGERBLUE" layoutX="625.0" layoutY="305.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
+            <Label alignment="TOP_CENTER" layoutX="375.0" layoutY="340.0" prefHeight="100.0" prefWidth="400.0" styleClass="loading-text" text="Loading...">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Label>
          </children></AnchorPane>
    </children>
 </AnchorPane>
