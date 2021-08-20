@@ -2,12 +2,14 @@ package systems.tat.ramta.client.controller.gui;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import systems.tat.ramta.client.packets.out.PacketOutRegisterAccount;
 import systems.tat.ramta.client.service.LanguageService;
 import systems.tat.ramta.client.service.gui.DisplayService;
 import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
+import systems.tat.ramta.client.utils.AnimateUtils;
 import systems.tat.ramta.client.utils.FXUtils;
 
 import java.util.List;
@@ -40,15 +43,11 @@ public class AccountController {
     /*
     * Login Area
     */
-    public Label signInLeftHeader;
-    public Label signInText;
     public JFXButton signInSignUpBtn;
     public TextField signInTextInput;
     public PasswordField signInPasswordInput;
     public JFXButton signInBtn;
-    public Label signInRightHeader;
     public JFXCheckBox remember;
-    public Label passwordHelp;
     /*
     * Pages
     */
@@ -62,16 +61,16 @@ public class AccountController {
     * Register Area
     */
     public JFXButton signUpSignInBtn;
-    public Label signUpText;
-    public Label signUpLeftHeader;
 
     public JFXButton signUpBtn;
     public JFXCheckBox acceptBox;
     public TextField signUpTextInputEmail;
-    public Label signUpRightHeader;
     public TextField signUpTextInputName;
     public PasswordField signUpPasswordInput;
-    public Label rulesLink;
+
+    public Circle loadingIcon01;
+    public Circle loadingIcon02;
+    public Circle loadingIcon03;
 
     private List<Node> nodes;
 
@@ -146,6 +145,14 @@ public class AccountController {
             new PacketOutRegisterAccount(clientHandlerService, client);
         } else {
             logger.warn("Can't send packet when the input is null!");
+        }
+    }
+
+    public void playLoadingScreen() {
+        if(blurPane.isVisible()) {
+            AnimateUtils.Bounds(loadingIcon01, Timeline.INDEFINITE, 0.45, "500ms");
+            AnimateUtils.Bounds(loadingIcon02, Timeline.INDEFINITE, 0.45,"1000ms");
+            AnimateUtils.Bounds(loadingIcon03, Timeline.INDEFINITE, 0.45,"1100ms");
         }
     }
 
