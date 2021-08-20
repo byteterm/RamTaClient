@@ -11,11 +11,13 @@ import javafx.scene.layout.Pane;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
 import systems.tat.ramta.client.packets.out.PacketOutRegisterAccount;
-import systems.tat.ramta.client.service.ClientInputService;
 import systems.tat.ramta.client.service.LanguageService;
 import systems.tat.ramta.client.service.gui.DisplayService;
 import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
@@ -78,19 +80,18 @@ public class AccountController {
     private final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private final Client client;
-    private final ClientInputService clientInputService;
     private final LanguageService languageService;
     private final DisplayService displayService;
+    private final SocketClientHandlerService clientHandlerService;
 
     public AccountController(
             Client client,
-            ClientInputService clientInputService,
             LanguageService languageService,
-            DisplayService displayService) {
+            DisplayService displayService,@Lazy SocketClientHandlerService clientHandlerService) {
         this.client = client;
-        this.clientInputService = clientInputService;
         this.languageService = languageService;
         this.displayService = displayService;
+        this.clientHandlerService = clientHandlerService;
     }
 
     @FXML
@@ -144,7 +145,7 @@ public class AccountController {
         }
 
         if(client.getUsername() != null & client.getEmail() != null & client.getPassword() != null) {
-            this.clientInputService.sendRegister(client);
+            new PacketOutRegisterAccount(clientHandlerService, client);
         } else {
             logger.warn("Can't send packet when the input is null!");
         }

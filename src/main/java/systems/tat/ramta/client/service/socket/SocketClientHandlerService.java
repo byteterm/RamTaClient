@@ -23,8 +23,9 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
 
     private Channel channel;
     private final Client client;
+
     private final Logger logger = LoggerFactory.getLogger(SocketClientHandlerService.class);
-    private final AccountController controller;
+    private final AccountController accountController;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -44,7 +45,7 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     public void sendMessage(String message, String type) {
         if (channel != null
                 && channel.isActive()) {
-            logger.info("Sending packet " + type);
+            logger.info("Outgoing packed named " + type);
             channel.writeAndFlush(message);
         }
     }

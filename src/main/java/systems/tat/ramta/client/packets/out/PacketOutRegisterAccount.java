@@ -6,16 +6,16 @@ import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
 
 public class PacketOutRegisterAccount {
 
-    private final SocketClientHandlerService socketClientHandlerService;
+    private final Client client;
 
-    public PacketOutRegisterAccount(SocketClientHandlerService socketClientHandlerService, Client client) {
-        this.socketClientHandlerService = socketClientHandlerService;
+    public PacketOutRegisterAccount(SocketClientHandlerService clientHandlerService, Client client) {
+        this.client = client;
 
-        sendMessage(client);
+        sendMessage(clientHandlerService);
     }
 
-    private void sendMessage(Client client) {
-        socketClientHandlerService.sendMessage(Message.create()
+    private void sendMessage(SocketClientHandlerService clientHandlerService) {
+        clientHandlerService.sendMessage(Message.create()
                 .setType("RegisterAccount")
                 .setTarget("CLOUD")
                 .set("Username", client.getUsername())
