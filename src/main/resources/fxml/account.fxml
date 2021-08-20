@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
 
 <AnchorPane fx:id="mainFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="systems.tat.ramta.client.controller.gui.AccountController">
    <children>
@@ -85,6 +86,11 @@
       </Pane>
       <ImageView fitHeight="128.0" fitWidth="256.0" layoutX="120.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
       <ChoiceBox fx:id="languageChoice" layoutX="10.0" layoutY="575.0" prefHeight="0.0" prefWidth="70.0" styleClass="language-choice" />
-      <AnchorPane fx:id="blurPane" prefHeight="613.0" prefWidth="1151.0" styleClass="blur-pane" visible="false" />
+      <AnchorPane fx:id="blurPane" prefHeight="613.0" prefWidth="1151.0" styleClass="blur-pane">
+         <children>
+            <Circle fx:id="loadingIcon01" fill="DODGERBLUE" layoutX="525.0" layoutY="305.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
+            <Circle fx:id="loadingIcon02" fill="DODGERBLUE" layoutX="575.0" layoutY="305.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
+            <Circle fx:id="loadingIcon03" fill="DODGERBLUE" layoutX="625.0" layoutY="305.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-icon" />
+         </children></AnchorPane>
    </children>
 </AnchorPane>

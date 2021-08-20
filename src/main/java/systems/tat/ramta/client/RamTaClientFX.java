@@ -7,8 +7,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import systems.tat.ramta.client.event.StageReadyEvent;
-import systems.tat.ramta.client.service.LanguageService;
-import systems.tat.ramta.client.service.settings.SettingService;
 
 public class RamTaClientFX extends Application {
 
