@@ -33,7 +33,7 @@ public class StringHandlerService extends BasicStringHandler {
 
             constructor.newInstance(message, channel, socketClientHandlerService);
         } catch (Exception ex) {
-            System.out.println("No Handler for packet " + message.getType() + " found");
+            logger.info("No Handler for packet " + message.getType() + " found");
         }
     }
 

@@ -14,7 +14,6 @@ public class SocketClientService {
     public SocketClientService(TaskExecutor taskExecutor, ApplicationContext applicationContext) {
         this.taskExecutor = taskExecutor;
         this.applicationContext = applicationContext;
-        connect();
     }
 
     public void connect() {
