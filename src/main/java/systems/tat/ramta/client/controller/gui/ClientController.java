@@ -1,43 +1,41 @@
 package systems.tat.ramta.client.controller.gui;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lombok.Data;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import systems.tat.ramta.client.enums.ChatSender;
 import systems.tat.ramta.client.models.gui.ChatMember;
 import systems.tat.ramta.client.service.gui.DisplayService;
 import systems.tat.ramta.client.service.system.ChatService;
 import systems.tat.ramta.client.utils.FXUtils;
+
+import javax.swing.text.html.ListView;
 
 @Component
 @Data
 @FxmlView("/fxml/client.fxml")
 public class ClientController {
 
-    /*
-    * General Scene elements
-    */
-    public Pane header;
+    /* General area */
+    public AnchorPane header;
     public Button exit;
-    public Button resize;
+    public Button maximize;
     public Button minimize;
-
-    /*
-    * Chat pane
-    */
-    public TextField chatMessage;
-    public JFXButton sendMessageBtn;
-    public VBox chatPane;
-    public ScrollPane scroller;
-
+    /* Chat area */
+    public AnchorPane chatPane;
+    public TextField chatInput;
+    public ScrollBar chatScroll;
+    public VBox chatView;
 
     private final DisplayService displayService;
     @Lazy
@@ -50,7 +48,16 @@ public class ClientController {
 
     @FXML
     public void onClose(ActionEvent event) {
-        System.exit( 0 );
+        System.exit(0);
+    }
+
+    @FXML
+    public void onMaximize(ActionEvent event) {
+        if(displayService.getStage().isMaximized()) {
+            displayService.getStage().setMaximized(false);
+            return;
+        }
+        displayService.getStage().setMaximized(true);
     }
 
     @FXML
@@ -59,16 +66,23 @@ public class ClientController {
     }
 
     @FXML
-    public void onResize(ActionEvent event) {
-        //Todo: change the size of the window to max and oldSize
+    public void onSpelling(ActionEvent event) {
     }
 
     @FXML
-    public void sendMessage(ActionEvent event) {
-        String message = chatMessage.getText();
-        ChatMember member = new ChatMember("Exepta", "#1996");
-        chatService.displayChatMessage(chatPane, member, message);
-        chatMessage.setText("");
-        scroller.setVvalue(scroller.getVmax());
+    public void sendChatMessage(KeyEvent event) {
+        if(event.getCode().equals(KeyCode.ENTER)) {
+            System.out.println("Text: " + chatInput.getText());
+            ChatMember member = new ChatMember("Exepta", "", ChatSender.YOU_SELF);
+            chatService.displayChatMessage(chatView, member, chatInput.getText());
+            chatInput.setText("");
+        }
+
+        if(event.getCode().equals(KeyCode.F1)) {
+            System.out.println("Text: " + chatInput.getText());
+            ChatMember member = new ChatMember("Niklas", "", ChatSender.TARGET);
+            chatService.displayChatMessage(chatView, member, chatInput.getText());
+            chatInput.setText("");
+        }
     }
 }
