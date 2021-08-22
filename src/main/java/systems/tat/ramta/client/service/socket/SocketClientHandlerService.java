@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import systems.tat.ramta.client.controller.gui.AccountController;
+import systems.tat.ramta.client.controller.gui.StageInitializer;
 import systems.tat.ramta.client.enums.ClientStatus;
 import systems.tat.ramta.client.lib.message.Message;
 import systems.tat.ramta.client.models.Client;
@@ -30,12 +31,18 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         setChannel(ctx.channel());
+        accountController.blurPane.setVisible(false);
         new PacketOutHandshake(this, ClientStatus.LoginIn);
     }
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
         super.channelUnregistered(ctx);
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        accountController.blurPane.setVisible(true);
     }
 
     public void sendMessage(Message message) {
