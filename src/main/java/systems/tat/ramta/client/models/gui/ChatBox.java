@@ -2,8 +2,6 @@ package systems.tat.ramta.client.models.gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class ChatBox {
@@ -18,10 +16,9 @@ public class ChatBox {
 
     private void initialize(ChatMember member, String text) {
         pane = new AnchorPane();
-        Label label = new Label();
+        Label label = new Label(text);
         label.setMinWidth(100);
         label.setMaxWidth(400);
-        label.setText(text);
 
         if(direction.equals("left")) {
             label.setAlignment(Pos.TOP_LEFT);

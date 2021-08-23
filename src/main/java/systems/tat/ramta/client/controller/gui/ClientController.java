@@ -5,10 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import lombok.Data;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.context.annotation.Lazy;
@@ -36,6 +39,8 @@ public class ClientController {
     public TextField chatInput;
     public ScrollBar chatScroll;
     public VBox chatView;
+    /* User header */
+    public Circle youImage;
 
     private final DisplayService displayService;
     @Lazy
@@ -44,6 +49,7 @@ public class ClientController {
     @FXML
     public void initialize() {
         FXUtils.moveAbleWindow(header, displayService.getStage());
+        youImage.setFill(new ImagePattern(new Image("https://1.bp.blogspot.com/-bjvUSn0Gwro/Xwi-faIkn5I/AAAAAAABoYA/mll1pCwHpPIVJXbpwrJIaZ8E8ZtIqPq6wCLcBGAsYHQ/s1600/4655.jpg")));
     }
 
     @FXML
@@ -72,14 +78,12 @@ public class ClientController {
     @FXML
     public void sendChatMessage(KeyEvent event) {
         if(event.getCode().equals(KeyCode.ENTER)) {
-            System.out.println("Text: " + chatInput.getText());
             ChatMember member = new ChatMember("Exepta", "", ChatSender.YOU_SELF);
             chatService.displayChatMessage(chatView, member, chatInput.getText());
             chatInput.setText("");
         }
 
         if(event.getCode().equals(KeyCode.F1)) {
-            System.out.println("Text: " + chatInput.getText());
             ChatMember member = new ChatMember("Niklas", "", ChatSender.TARGET);
             chatService.displayChatMessage(chatView, member, chatInput.getText());
             chatInput.setText("");
