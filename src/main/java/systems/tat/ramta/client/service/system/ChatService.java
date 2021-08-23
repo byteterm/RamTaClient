@@ -23,8 +23,4 @@ public class ChatService {
         chatPane.getChildren().add(box.getPane());
     }
 
-    private void flow(ChatSender sender) {
-
-    }
-
 }

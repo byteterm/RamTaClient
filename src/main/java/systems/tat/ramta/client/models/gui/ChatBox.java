@@ -3,6 +3,8 @@ package systems.tat.ramta.client.models.gui;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 public class ChatBox {
 
@@ -17,6 +19,7 @@ public class ChatBox {
     private void initialize(ChatMember member, String text) {
         pane = new AnchorPane();
         Label label = new Label(text);
+        label.setAlignment(Pos.CENTER);
         label.setMinWidth(100);
         label.setMaxWidth(400);
 
@@ -35,6 +38,13 @@ public class ChatBox {
         //view.setFitWidth(64);
         //view.setFitHeight(64);
         //pane.getChildren().add(view);
+
+        Circle profilePicture = new Circle(30);
+        profilePicture.setLayoutX(40);
+        profilePicture.setLayoutY(35);
+        profilePicture.setFill(new ImagePattern(member.getImage()));
+
+        pane.getChildren().add(profilePicture);
         pane.getChildren().add(label);
     }
 
