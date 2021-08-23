@@ -17,6 +17,7 @@ import systems.tat.ramta.client.enums.ClientStatus;
 import systems.tat.ramta.client.lib.message.Message;
 import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.packets.out.PacketOutHandshake;
+import systems.tat.ramta.client.packets.out.PacketOutLogin;
 
 @EqualsAndHashCode(callSuper = false)
 @Service
@@ -34,7 +35,12 @@ public class SocketClientHandlerService extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         setChannel(ctx.channel());
         accountController.blurPane.setVisible(false);
-        new PacketOutHandshake(this, ClientStatus.LoginIn);
+
+        //Login if exists
+        if (client.getEmail() != null
+                & client.getPassword() != null) {
+            new PacketOutLogin(this, client);
+        }
     }
 
     @Override

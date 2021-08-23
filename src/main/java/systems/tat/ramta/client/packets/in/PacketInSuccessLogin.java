@@ -32,6 +32,7 @@ public class PacketInSuccessLogin extends PacketIn {
             });
         }
         Platform.runLater(() -> {
+            //ToDo: add avatar
             //getSocketClientHandlerService().getAccountController().getClientController().
             getSocketClientHandlerService().getAccountController().getDisplayService().displayScene("Client");
         });
