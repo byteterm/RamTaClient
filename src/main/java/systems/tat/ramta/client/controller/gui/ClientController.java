@@ -3,6 +3,7 @@ package systems.tat.ramta.client.controller.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -44,6 +45,7 @@ public class ClientController {
     public VBox chatView;
     /* User header */
     public Circle youImage;
+    public Label userName;
 
     private final DisplayService displayService;
     private final SocketClientHandlerService clientHandlerService;
@@ -82,13 +84,13 @@ public class ClientController {
     @FXML
     public void sendChatMessage(KeyEvent event) {
         if(event.getCode().equals(KeyCode.ENTER)) {
-            ChatMember member = new ChatMember("Exepta", "", ChatSender.YOU_SELF);
+            ChatMember member = new ChatMember("Exepta", "", ChatSender.YOU_SELF, new Image("https://1.bp.blogspot.com/-bjvUSn0Gwro/Xwi-faIkn5I/AAAAAAABoYA/mll1pCwHpPIVJXbpwrJIaZ8E8ZtIqPq6wCLcBGAsYHQ/s1600/4655.jpg"));
             chatService.displayChatMessage(chatView, member, chatInput.getText());
             chatInput.setText("");
         }
 
         if(event.getCode().equals(KeyCode.F1)) {
-            ChatMember member = new ChatMember("Niklas", "", ChatSender.TARGET);
+            ChatMember member = new ChatMember("Niklas", "", ChatSender.TARGET, new Image("https://scontent.fdtm2-2.fna.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=S_kDNy6y7GAAX9Ji0g4&_nc_ht=scontent.fdtm2-2.fna&oh=a355fbc407e1e3295c555f8c71f6c10a&oe=6147DF8E"));
             chatService.displayChatMessage(chatView, member, chatInput.getText());
             chatInput.setText("");
         }
