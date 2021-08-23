@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import systems.tat.ramta.client.enums.ChatSender;
 import systems.tat.ramta.client.models.gui.ChatMember;
 import systems.tat.ramta.client.service.gui.DisplayService;
+import systems.tat.ramta.client.service.socket.SocketClientHandlerService;
 import systems.tat.ramta.client.service.system.ChatService;
 import systems.tat.ramta.client.utils.FXUtils;
 
@@ -43,13 +44,14 @@ public class ClientController {
     public Circle youImage;
 
     private final DisplayService displayService;
+    private final SocketClientHandlerService clientHandlerService;
     @Lazy
     private final ChatService chatService;
 
     @FXML
     public void initialize() {
         FXUtils.moveAbleWindow(header, displayService.getStage());
-        youImage.setFill(new ImagePattern(new Image("https://1.bp.blogspot.com/-bjvUSn0Gwro/Xwi-faIkn5I/AAAAAAABoYA/mll1pCwHpPIVJXbpwrJIaZ8E8ZtIqPq6wCLcBGAsYHQ/s1600/4655.jpg")));
+        youImage.setFill(new ImagePattern(new Image("https://scontent.fdtm2-2.fna.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=S_kDNy6y7GAAX9Ji0g4&_nc_ht=scontent.fdtm2-2.fna&oh=a355fbc407e1e3295c555f8c71f6c10a&oe=6147DF8E")));
     }
 
     @FXML

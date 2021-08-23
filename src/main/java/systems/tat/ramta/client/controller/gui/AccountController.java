@@ -80,15 +80,17 @@ public class AccountController {
     private final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private final Client client;
+    private final ClientController clientController;
     private final LanguageService languageService;
-    public final DisplayService displayService;
+    private final DisplayService displayService;
     private final SocketClientHandlerService clientHandlerService;
 
     public AccountController(
             Client client,
-            LanguageService languageService,
-            DisplayService displayService,@Lazy SocketClientHandlerService clientHandlerService) {
+            @Lazy ClientController clientController, LanguageService languageService,
+            DisplayService displayService, @Lazy SocketClientHandlerService clientHandlerService) {
         this.client = client;
+        this.clientController = clientController;
         this.languageService = languageService;
         this.displayService = displayService;
         this.clientHandlerService = clientHandlerService;

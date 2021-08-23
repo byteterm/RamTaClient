@@ -34,6 +34,7 @@ public class StringHandlerService extends BasicStringHandler {
             constructor.newInstance(message, channel, socketClientHandlerService);
         } catch (Exception ex) {
             logger.info("No Handler for packet " + message.getType() + " found");
+            ex.printStackTrace();
         }
     }
 
