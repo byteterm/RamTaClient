@@ -20,7 +20,8 @@ public class PacketInSuccessLogin extends PacketIn {
 
     private void handle() {
         getSocketClientHandlerService().getClient().setUsername(getMessage().get("Username").toString());
-        getSocketClientHandlerService().getClient().setUsername(getMessage().get("UUID").toString());
+        getSocketClientHandlerService().getClient().setNameId(getMessage().get("NameId").toString());
+        getSocketClientHandlerService().getClient().setUuid(getMessage().get("UUID").toString());
 
         if (getMessage().get("Image") != null) {
             getSocketClientHandlerService().getClient().setImage(getMessage().get("Image").toString());

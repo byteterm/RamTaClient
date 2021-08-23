@@ -10,6 +10,8 @@ import java.util.Base64;
 public class Client {
 
     private String username;
+    private String nameId;
+    private String uuid;
     private String password;
     private String email;
     private String image;
