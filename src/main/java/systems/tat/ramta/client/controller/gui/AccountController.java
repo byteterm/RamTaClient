@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import lombok.Getter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import systems.tat.ramta.client.models.Client;
 import systems.tat.ramta.client.models.gui.ReflectKey;
+import systems.tat.ramta.client.packets.out.PacketOutLogin;
 import systems.tat.ramta.client.packets.out.PacketOutRegisterAccount;
 import systems.tat.ramta.client.service.LanguageService;
 import systems.tat.ramta.client.service.gui.DisplayService;
@@ -27,6 +29,7 @@ import systems.tat.ramta.client.utils.FXUtils;
 import java.util.List;
 
 @Component
+@Getter
 @FxmlView("/fxml/account.fxml")
 public class AccountController {
 
@@ -78,7 +81,7 @@ public class AccountController {
 
     private final Client client;
     private final LanguageService languageService;
-    private final DisplayService displayService;
+    public final DisplayService displayService;
     private final SocketClientHandlerService clientHandlerService;
 
     public AccountController(
@@ -150,13 +153,15 @@ public class AccountController {
 
     @FXML
     public void onLogin(ActionEvent event) {
-        if(FXUtils.checkNull(signInTextInput.getText())) {
+        if(FXUtils.checkNull(signInPasswordInput.getText())
+                & FXUtils.checkNull(signInTextInput.getText())) {
 
+            Client client = new Client();
+            client.setPassword(signInPasswordInput.getText());
+            client.setEmail(signInTextInput.getText());
+
+            new PacketOutLogin(clientHandlerService, client);
         }
-        if(FXUtils.checkNull(signInPasswordInput.getText())) {
-            //Todo: do login stuff niklas
-        }
-        displayService.displayScene("Client");
     }
 
     public void playLoadingScreen() {
