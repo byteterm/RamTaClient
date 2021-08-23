@@ -20,6 +20,8 @@ public class PacketInSuccessLogin extends PacketIn {
 
     private void handle() {
         getSocketClientHandlerService().getClient().setUsername(getMessage().get("Username").toString());
+        getSocketClientHandlerService().getClient().setUsername(getMessage().get("UUID").toString());
+
         if (getMessage().get("Image") != null) {
             getSocketClientHandlerService().getClient().setImage(getMessage().get("Image").toString());
             byte[] decodedBytes = Base64.getDecoder().decode(getSocketClientHandlerService().getClient().getImage());
@@ -29,6 +31,7 @@ public class PacketInSuccessLogin extends PacketIn {
             });
         }
         Platform.runLater(() -> {
+            //getSocketClientHandlerService().getAccountController().getClientController().
             getSocketClientHandlerService().getAccountController().getDisplayService().displayScene("Client");
         });
     }

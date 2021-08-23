@@ -1,6 +1,5 @@
 package systems.tat.ramta.client.models;
 
-import org.bson.types.Binary;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
