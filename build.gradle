@@ -34,7 +34,6 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.0-rc1'
     implementation 'com.google.code.gson:gson:2.8.7'
     compileOnly 'org.projectlombok:lombok:1.18.20'
-    implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.3'
     // https://mvnrepository.com/artifact/io.netty/netty-all

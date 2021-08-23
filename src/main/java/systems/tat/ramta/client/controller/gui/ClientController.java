@@ -24,6 +24,8 @@ import systems.tat.ramta.client.service.system.ChatService;
 import systems.tat.ramta.client.utils.FXUtils;
 
 import javax.swing.text.html.ListView;
+import java.io.ByteArrayInputStream;
+import java.util.Base64;
 
 @Component
 @Data
@@ -51,7 +53,7 @@ public class ClientController {
     @FXML
     public void initialize() {
         FXUtils.moveAbleWindow(header, displayService.getStage());
-        youImage.setFill(new ImagePattern(new Image("https://scontent.fdtm2-2.fna.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=S_kDNy6y7GAAX9Ji0g4&_nc_ht=scontent.fdtm2-2.fna&oh=a355fbc407e1e3295c555f8c71f6c10a&oe=6147DF8E")));
+        youImage.setFill(new ImagePattern(new Image("https://i.ibb.co/xjy0RkY/Download-1.png")));
     }
 
     @FXML

@@ -13,15 +13,7 @@ public class Client {
     private String username;
     private String password;
     private String email;
-    private Binary image;
+    private String image;
 
     private long AcceptAGB;
-
-    public String getImage() {
-        if (image != null) {
-            return Base64.getEncoder().encodeToString(image.getData());
-        }
-
-        return null;
-    }
 }
